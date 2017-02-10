@@ -1,0 +1,39 @@
+@import url(http://fonts.googleapis.com/css?family=Lily+Script+One);
+
+[type="checkbox"] {
+  position: absolute;
+  left: -9999px;
+}
+[type="checkbox"] + label:after {
+  content: '';
+  position: absolute;
+}
+[type="checkbox"] + label {
+  display: block;
+  position: relative;
+  padding-left: 26px;
+  cursor: pointer;
+  line-height: 36px;
+  font-size: 15px;//
+  color: black;
+  //text-shadow: #2c3e50 2px 2px 1px;
+  transition: color .3s;
+}
+[type="checkbox"] + label:after {
+  width: 30px; 
+  height: 30px;
+  transition: all .2s;
+  top: 0; 
+  left: 0;
+}
+/* OFF */
+[type="checkbox"]:not(:checked) + label:after {
+  background: url('https://dl.dropboxusercontent.com/u/3522/check_off.png') left center no-repeat;
+}
+/* ON */
+[type="checkbox"]:checked + label {
+  color: #180793;
+}
+[type="checkbox"]:checked + label:after {
+  background: url('https://dl.dropboxusercontent.com/u/3522/check_on.png') left center no-repeat;
+}

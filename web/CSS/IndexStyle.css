@@ -1,0 +1,85 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11/08/2016, 03:32:49 PM
+    Author     : Alejandro
+*/
+/* reset del body y el html*/
+body,html{margin:0; padding:0;}
+body{font-family:Helvetica, Arial, sans-serif; font-size:14px;}
+
+/* barra superior */
+#barra_superior{
+    padding:5px 20px;
+    background:black;
+    font-size:12px;
+    color:#9A9797;
+    -webkit-box-shadow: 0px 0px 8px 1px rgba(0 ,0 , 0, 0.3);
+    -moz-box-shadow: 0px 0px 8px 1px rgba(0 ,0 , 0, 0.3);
+    box-shadow: 0px 0px 8px 1px rgba(0 ,0 , 0, 0.3);
+    margin-bottom:20px;
+    overflow:hidden;
+    min-width:920px;//2700px; 
+}
+/*Para que sea de una sola linea*/
+#barra_superior ul{
+    list-style:none;
+    padding:0; margin:0;  
+    float:left;
+}
+/*Para que las opciones esten en un solo renglon*/
+#barra_superior ul li{
+    float:left;
+    padding:2px; margin:0;
+}
+/*Para que queden como botones las opciones*/
+#barra_superior a{
+    display:block;
+    height:20px;
+    line-height:20px;
+    padding:0 5px;
+    text-decoration:none;
+    color:#FFF;
+    border-radius:5px;
+} 
+/*Para que cambie el boton de color cuando pase el mouse*/
+#barra_superior a:hover{
+    color:#FFFFFF;
+    background:#979797;
+}
+/*Para que la info us se haga a la derecha*/
+#barra_superior .info-usuario{
+    float:right; 
+}
+
+/* contenedor */
+#InfoGeneral{
+    /*Ancho*/
+    width:800px;
+    /*Margen*/
+    padding:10px; 
+    background: darkkhaki;
+    margin:10px;
+    border-radius:10px;
+    -webkit-box-shadow: 0px 3px 8px 1px rgba(0 ,0 , 0, 0.3);
+    -moz-box-shadow: 0px 3px 8px 1px rgba(0 ,0 , 0, 0.3);
+    box-shadow: 0px 3px 8px 1px rgba(0 ,0 , 0, 0.3);
+    float:left;
+    font: 100% sans-serif;
+}
+
+#Videos{
+    width:450px;
+    padding:150px;
+    background:burlywood;
+    margin:20px;
+    border-radius:10px;
+    -webkit-box-shadow: 0px 3px 8px 1px rgba(0,0 , 0, 0.3);
+    -moz-box-shadow: 0px 3px 8px 1px rgba(0 ,0 , 0, 0.3);
+    box-shadow: 10px 3px 8px 1px rgba(0 ,0 , 0, 0.3);
+    float:right;
+    text-decoration: none#000000;
+}

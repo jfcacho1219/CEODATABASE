@@ -1,0 +1,48 @@
+.cuatro a {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #727272;
+    text-decoration: none;
+    color: #3838A8;
+    //background-image: url(ima/dos.png);
+    background-repeat:  repeat-x;
+    background-position: left top;
+    padding: 5px;
+    border-top-width: 14px;
+    border-top-style: ridge;
+    border-top-color: #1E00FF;
+    border-right-color: #1700C6;
+    border-bottom-color: #0F017D;
+    border-left-color: #1E00FF;
+    border-right-width: 14px;
+    border-bottom-width: 14px;
+    border-left-width: 14px;
+    border-right-style: ridge;
+    border-bottom-style: ridge;
+    border-left-style: ridge;
+}
+.cuatro a:hover {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    background-color: #727272;
+    text-decoration: none;
+    color: #FFFFFF;
+    background-image: url(ima/uno.png);
+    background-repeat:  repeat-x;
+    background-position: left top;
+    padding: 5px;
+    border-top-width: 14px;
+    border-top-style: ridge;
+    border-top-color: #0013A4;
+    border-right-color: #0022FF;
+    border-bottom-color: #FFCC00;
+    border-left-color: #0023A4;
+    border-right-width: 14px;
+    border-bottom-width: 14px;
+    border-left-width: 14px;
+    border-right-style: ridge;
+    border-bottom-style: ridge;
+    border-left-style: ridge;
+}

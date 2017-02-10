@@ -1,0 +1,21 @@
+  #contenedorRegistro{
+    position:relative;
+    width:700px;
+    background:#00AFFF;
+    margin:auto;
+    margin-top: 8px;
+    border-radius:5px;
+    border-color: #3a7999;
+    border-style: ridge;
+    -webkit-box-shadow: 0px 3px 8px 1px rgba(0 ,0 , 0, 0.5);
+    -moz-box-shadow: 0px 3px 8px 1px rgba(0 ,0 , 0, 0.5);
+    box-shadow: 0px 3px 8px 1px rgba(0 ,0 , 0, 0.5); 
+  }
+  #Alerta{
+    position: relative;
+    top: -250px;
+    left: 350px;
+    width: 400px;
+    color:red;
+    font: 150% sans-serif;
+  } 
