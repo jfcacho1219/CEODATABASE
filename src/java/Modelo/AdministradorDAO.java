@@ -5,9 +5,6 @@
  */
 package Modelo;
 
-import com.mysql.jdbc.PreparedStatement;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -60,9 +57,6 @@ public class AdministradorDAO {
     public Administrador IniciarSesion(String Correo) throws SQLException
     {
         String Query = "SELECT * FROM basededatosceo.administradores where Admi_Correo='"+Correo+"';";
-        //String Query2 = "SELECT * FROM basededatosceo.administradores where Admi_Correo='?';";
-        //java.sql.PreparedStatement prst =  conex2.prepareStatement(Query2);
-        //prst.setString(1, Correo);
         Statement st = conex.getConnection().createStatement();
         ResultSet rs = st.executeQuery(Query);
         rs.next();

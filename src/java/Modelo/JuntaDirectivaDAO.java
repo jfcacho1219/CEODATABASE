@@ -28,7 +28,6 @@ public class JuntaDirectivaDAO {
         Statement st = conex.getConnection().createStatement();
         System.out.println(Query);
         st.executeUpdate(Query);
-        st.close();
     }
 
     public String ObtenerJuntaYEmpresa() throws SQLException {
@@ -56,8 +55,6 @@ public class JuntaDirectivaDAO {
             rs.next();
         }
         retorno = retorno+"]";
-        rs.close();
-        st.close();
         return retorno;
         
     }
@@ -92,8 +89,6 @@ public class JuntaDirectivaDAO {
             rs.next();
         }
         retorno = retorno+"]";
-        rs.close();
-        st.close();
         return retorno;
     }
     
@@ -103,7 +98,6 @@ public class JuntaDirectivaDAO {
                 + " WHERE `Junta_Id`='"+Junta.getID()+"';";
         Statement st = conex.getConnection().createStatement();
         st.executeUpdate(Query);
-        st.close();
     }
     
     public void Eliminar(String Id) throws SQLException
@@ -111,7 +105,6 @@ public class JuntaDirectivaDAO {
         String Query = "DELETE FROM `basededatosceo`.`juntadirectiva` WHERE `Junta_Id`='"+Id+"';";
         Statement st = conex.getConnection().createStatement();
         st.executeUpdate(Query);
-        st.close();
     }
     
     public JuntaDirectiva NuevaJuntaDirectiva(String IdJunta) throws SQLException

@@ -32,8 +32,6 @@ public class EmpleadoDAO {
             rs = st.executeQuery(Query);
             rs.next();
             String retorno =(rs.getString(1));
-            rs.close();
-            st.close();
             return Integer.parseInt(retorno);
         } catch (SQLException ex) {
             return 1;
@@ -114,8 +112,6 @@ public class EmpleadoDAO {
             rs.next();
         }
         retorno = retorno+"]";
-        rs.close();
-        st.close();
         return retorno;
     }
 
@@ -212,9 +208,9 @@ public class EmpleadoDAO {
             rs.next();
         }
         retorno = retorno+"]";
-        rs.close();
-        st.close();
         return retorno;
+    
+
     }
 
 

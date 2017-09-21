@@ -28,14 +28,12 @@
 }
 /* OFF */
 [type="checkbox"]:not(:checked) + label:after {
-  background: url('https://www.dropbox.com/s/wtlkoqogc09qs6y/Off.png?dl=0') left center no-repeat;
-  //background: url('https://dl.dropboxusercontent.com/u/3522/check_off.png') left center no-repeat;
+  background: url('https://dl.dropboxusercontent.com/u/3522/check_off.png') left center no-repeat;
 }
 /* ON */
 [type="checkbox"]:checked + label {
   color: #180793;
 }
 [type="checkbox"]:checked + label:after {
-  background: url('https://www.dropbox.com/s/8kdzhez9sd7o3g6/Onn.png?dl=0') left center no-repeat;
-  //background: url('https://dl.dropboxusercontent.com/u/3522/check_on.png') left center no-repeat;
+  background: url('https://dl.dropboxusercontent.com/u/3522/check_on.png') left center no-repeat;
 }

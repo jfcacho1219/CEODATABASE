@@ -1,8 +1,10 @@
 package Modelo;
 
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.DriverManager;
+
+
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Conexion {
     public Conexion(){
@@ -14,7 +16,7 @@ public class Conexion {
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conex = DriverManager.getConnection("jdbc:mysql://localhost/basededatosceo","root","root");            
+            conex = DriverManager.getConnection("jdbc:mysql://localhost/basededatosceo","DBCEO","root");            
         } 
         catch (Exception e) {
             
@@ -22,10 +24,6 @@ public class Conexion {
         return conex;     
     }
     
-    public Connection getConex()
-    {
-        return conex;
-    }
     
     public void desconectar(){
       conex = null;

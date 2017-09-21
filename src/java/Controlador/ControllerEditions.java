@@ -142,7 +142,6 @@ public class ControllerEditions extends HttpServlet {
             throws ServletException, IOException {
         Administrador Admi = (Administrador)request.getSession().getAttribute("Administrador");
         String txt = request.getParameter("txtObjeto");
-        String AvisoNumFilas="";
         if (txt.equals("Empresa")) 
         {
             String NITOriginal = request.getParameter("txtNITOriginal");
@@ -260,12 +259,10 @@ public class ControllerEditions extends HttpServlet {
                 }
             }
             try {
-                EdicionesDAO EdicionDAO = new EdicionesDAO();
-                AvisoNumFilas = EdicionDAO.ObtenerMensajeParaEliminar();
-                EdicionDAO.Insertar(new Ediciones("","","Empresa "+Empre.getNombre(), 
+                new EdicionesDAO().Insertar(new Ediciones("","","Empresa "+Empre.getNombre(), 
                         Edicion, Valor, Admi));
             } catch (SQLException ex) {
-                System.out.println("Ocurrió un Error para insertar la edición en la clase ControllerEditions linea 268");
+                System.out.println("Ocurrió un Error para insertar la edición en la clase ControllerEditions linea 244");
             }
             Empresa Company = new Empresa(NIT, Nombre, Sociedad, AnoCreacion, AnoAfiliacion, SectorProductivo, NumeroEmpleados, TamanoEmpresa, Descripcion, SostenimientoPesos, SostenimientoSMLV, DireccionPlanta, DireccionAdministrativa, MunicipioPlanta, MunicipioAdministrativa, Activa);
             EmpresaDAO CompanyDAO = new EmpresaDAO();
@@ -282,7 +279,7 @@ public class ControllerEditions extends HttpServlet {
                         String DescripcionAlerta = request.getParameter("txtDescripcionAlerta");
                         new AlertaDAO().Insertar(new Alerta("", DescripcionAlerta, Company));
                     }
-                    request.setAttribute("Mensaje","Se actualizó correctamente la Empresa: "+Company.getNombre()+" "+Company.getSociedad()+AvisoNumFilas);
+                    request.setAttribute("Mensaje","Se actualizó correctamente la Empresa: "+Company.getNombre()+" "+Company.getSociedad());
                     
                 }
                 request.getRequestDispatcher("CreateReadUpdateDelete.jsp").forward(request, response);
@@ -385,9 +382,7 @@ public class ControllerEditions extends HttpServlet {
                         NombreAtributo += "Trato";
                         ValoresAnteriores += Emple.getPersona().getTitulo();
                     }
-                    EdicionesDAO EdicionDAO = new EdicionesDAO();
-                    AvisoNumFilas = EdicionDAO.ObtenerMensajeParaEliminar();
-                    EdicionDAO.Insertar(new Ediciones("", "", "Comité "+Comit.getNombre()+" "+Emple.getEmpresa().getNombre(),
+                    new EdicionesDAO().Insertar(new Ediciones("", "", "Comité "+Comit.getNombre()+" "+Emple.getEmpresa().getNombre(),
                             NombreAtributo,ValoresAnteriores, (Administrador)request.getSession().getAttribute("Administrador")));
                     Emple.setComite(Comit);
                     Emple.setPersona(Person);
@@ -397,7 +392,7 @@ public class ControllerEditions extends HttpServlet {
                     Emple.setTelefono2(Tel2);
                     new EmpleadoDAO().Editar(Emple);
                     new PersonaDAO().Editar(Person);
-                    request.setAttribute("Mensaje", "Los datos de "+Person.getNombre()+" "+Person.getApellidos()+" incluida su vinculación con la empresa han  sido actualizados"+AvisoNumFilas);
+                    request.setAttribute("Mensaje", "Los datos de "+Person.getNombre()+" "+Person.getApellidos()+" incluida su vinculación con la empresa han  sido actualizados");
                 }
                 request.getRequestDispatcher("CreateReadUpdateDelete.jsp").forward(request, response);
             } catch (SQLException ex) {
@@ -535,12 +530,11 @@ public class ControllerEditions extends HttpServlet {
                     new ProgramaPagoDAO().Editar(ProgramPago,ProgramaOriginal );
                     new PersonaDAO().Editar(Person);
                     new EmpleadoDAO().Editar(Emple);
-                    EdicionesDAO EdicionDAO = new EdicionesDAO();
-                    AvisoNumFilas = EdicionDAO.ObtenerMensajeParaEliminar();
-                    EdicionDAO.Insertar(new Ediciones("", "", "Programa "+ProgramPago.getTipo().getNombre()+" "+Emple.getEmpresa().getNombre(),
+                    
+                    new EdicionesDAO().Insertar(new Ediciones("", "", "Programa "+ProgramPago.getTipo().getNombre()+" "+Emple.getEmpresa().getNombre(),
                             NombreAtributo,ValoresAnteriores, (Administrador)request.getSession().getAttribute("Administrador")));
                     
-                    request.setAttribute("Mensaje", "Todos los datos de "+Person.getNombre()+" "+Person.getApellidos()+" incluida su vinculación con la empresa y el programa han sido Editados"+AvisoNumFilas);
+                    request.setAttribute("Mensaje", "Todos los datos de "+Person.getNombre()+" "+Person.getApellidos()+" incluida su vinculación con la empresa y el programa han sido Editados");
                     request.getRequestDispatcher("CreateReadUpdateDelete.jsp").forward(request, response);
 
                 } catch (SQLException ex) {
@@ -576,12 +570,10 @@ public class ControllerEditions extends HttpServlet {
                 Junta.setCalidad(Calidad);
                 try {
                     new JuntaDirectivaDAO().Editar(Junta);
-                    EdicionesDAO EdicionDAO = new EdicionesDAO();
-                    AvisoNumFilas = EdicionDAO.ObtenerMensajeParaEliminar();
-                    EdicionDAO.Insertar(new Ediciones("", "", "Junta Directiva "+new EmpresaDAO().NuevaEmpresa(NIT).getNombre(),
+                    new EdicionesDAO().Insertar(new Ediciones("", "", "Junta Directiva "+new EmpresaDAO().NuevaEmpresa(NIT).getNombre(),
                             Anterior,"Miembro", Admi));
                     
-                    request.setAttribute("Mensaje", "La vinculación de la empresa "+Emple.getEmpresa().getNombre()+" "+Emple.getEmpresa().getSociedad()+"  a la Junta Directiva ha sido editada correctamente"+AvisoNumFilas);
+                    request.setAttribute("Mensaje", "La vinculación de la empresa "+Emple.getEmpresa().getNombre()+" "+Emple.getEmpresa().getSociedad()+"  a la Junta Directiva ha sido editada correctamente ");
                     request.getRequestDispatcher("CreateReadUpdateDelete.jsp").forward(request, response);
                 } catch (SQLException ex) {
                     request.setAttribute("Error", "No se ha podido Editar la Junta Directiva de "+Emple.getEmpresa().getNombre()+" "+Emple.getEmpresa().getSociedad());
@@ -593,12 +585,10 @@ public class ControllerEditions extends HttpServlet {
                 String Anterior = Junta.getCalidad();
                 Junta.setCalidad(Calidad);
                 new JuntaDirectivaDAO().Editar(Junta);
-                EdicionesDAO EdicionDAO = new EdicionesDAO();
-                AvisoNumFilas = EdicionDAO.ObtenerMensajeParaEliminar();
-                EdicionDAO.Insertar(new Ediciones("", "", "Junta Directiva "+new EmpresaDAO().NuevaEmpresa(NIT).getNombre(),
+                new EdicionesDAO().Insertar(new Ediciones("", "", "Junta Directiva "+new EmpresaDAO().NuevaEmpresa(NIT).getNombre(),
                             "Miembro",Anterior, Admi));
                     
-                request.setAttribute("Mensaje", "La vinculación de la empresa "+Emple.getEmpresa().getNombre()+" "+Emple.getEmpresa().getSociedad()+"  a la Junta Directiva ha sido editada correctamente"+AvisoNumFilas);
+                request.setAttribute("Mensaje", "La vinculación de la empresa "+Emple.getEmpresa().getNombre()+" "+Emple.getEmpresa().getSociedad()+"  a la Junta Directiva ha sido editada correctamente ");
                 request.getRequestDispatcher("CreateReadUpdateDelete.jsp").forward(request, response);
             } catch (SQLException ex) {
                 request.setAttribute("Error", "No se ha podido Editar la Junta Directiva de "+Emple.getEmpresa().getNombre()+" "+Emple.getEmpresa().getSociedad());

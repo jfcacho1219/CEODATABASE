@@ -37,7 +37,6 @@
                 <div class="form-group">
                     <a id="labelOriginal">Comité</a>
                     <select onchange="Activartxt()" class="form-control" name="txtCargo" id="txtCargo">
-                        <option>Seleccione</option>
                         <script>
                             var VectorAdmi = <%=Administrativos%>;
                             for (var i = 0; i < VectorAdmi.length; i=i+2) {

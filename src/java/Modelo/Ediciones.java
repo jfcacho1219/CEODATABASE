@@ -1,7 +1,6 @@
 
 package Modelo;
 
-import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -73,7 +72,6 @@ public class Ediciones {
         this.Admi = Admi;
     }
     
-
     
     
 }

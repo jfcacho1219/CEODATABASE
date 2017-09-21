@@ -79,8 +79,6 @@ public class ProgramaPagoDAO {
             rs.next();
         }
         retorno = retorno+"]";
-        rs.close();
-        st.close();
         return retorno;
     }
 
@@ -180,8 +178,6 @@ public class ProgramaPagoDAO {
             rs.next();
         }
         retorno = retorno+"]";
-        rs.close();
-        st.close();
         return retorno;
     }
     
