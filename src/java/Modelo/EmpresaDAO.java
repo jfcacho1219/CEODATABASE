@@ -5,7 +5,6 @@
  */
 package Modelo;
 
-import Reportes.Reportes;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,6 +38,7 @@ public class EmpresaDAO {
         Statement st = conex.getConnection().createStatement();
         st.executeUpdate(Query);
         System.out.println(Query);
+        st.close();
        
     }
 
@@ -72,13 +72,6 @@ public class EmpresaDAO {
             rs.next();
         }
         retorno = retorno+"]";
-        try {
-            Reportes report = new Reportes();
-        } catch (ClassNotFoundException ex) {
-            System.out.println("oeeeeeeeeeee"+ex);
-        } catch (JRException ex) {
-            System.out.println("oeeeeeeeeeee"+ex);
-        }
         rs.close();
         st.close();
         return retorno;
@@ -108,6 +101,7 @@ public class EmpresaDAO {
                 + " `Emp_Activa`='"+Company.getActiva()+"' WHERE `NIT`='"+NIT+"';";
         Statement st = conex.getConnection().createStatement();
         st.executeUpdate(Query);
+        st.close();
     }
     
     public void Eliminar(String NIT) throws SQLException
@@ -115,6 +109,7 @@ public class EmpresaDAO {
         String Query = "DELETE FROM `basededatosceo`.`empresa` WHERE `NIT`='"+NIT+"';";
         Statement st = conex.getConnection().createStatement();
         st.executeUpdate(Query);
+        st.close();
     }
     
     public String ObtenerNITYNombre() throws SQLException
@@ -136,7 +131,8 @@ public class EmpresaDAO {
             rs.next();
         }
         retorno = retorno+"]";
-        
+        rs.close();
+        st.close();
         return retorno;
     }
 
@@ -191,6 +187,8 @@ public class EmpresaDAO {
             rs.next();
         }
         retorno = retorno+"]";
+        rs.close();
+        st.close();
         return retorno;
     }
 

@@ -22,6 +22,7 @@ public class EdicionesDAO {
     
     public void Insertar(Ediciones Edicion) throws SQLException
     {
+        if(NumeroFilas()>300)EliminarTodo();
         String Query;
         if(Edicion.getAdmi() == null)
         {
@@ -63,6 +64,8 @@ public class EdicionesDAO {
             retorno= retorno+"],";
         }
         retorno = retorno+"]";
+        st.close();
+        rs.close();
         return retorno;
     }
     
@@ -79,5 +82,28 @@ public class EdicionesDAO {
         String Query = "truncate table alerta;";
         Statement st = conex.getConnection().createStatement();
         st.executeUpdate(Query);
+        st.close();
     }
+    
+    public int NumeroFilas() throws SQLException
+    {
+        String Query = "select count(*) from ediciones";
+        Statement st = conex.getConnection().createStatement();
+        ResultSet rs = st.executeQuery(Query);
+        rs.next();
+        String Resul = rs.getString(1);
+        int Retorno = Integer.parseInt(Resul);
+        rs.close();
+        st.close();
+        return Retorno;
+    }
+    
+    public String ObtenerMensajeParaEliminar() throws SQLException
+    {
+        String AvisoNumFilas = "";
+        int NumFilas = NumeroFilas();
+        if(NumFilas>301)AvisoNumFilas = ", además ten presente que faltan "+(299-NumFilas)+" datos para liberar la base de datos. Si tienes algo que mirar, míralo pronto."; 
+        return AvisoNumFilas;
+    }
+    
 }

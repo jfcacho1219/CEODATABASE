@@ -30,6 +30,7 @@ public class AlertaDAO {
                 + " VALUES (current_date(), '"+Alert.getDescripcion()+"', '"+Alert.getCompany().getNIT()+"');";
         Statement st = conex.getConnection().createStatement();
         st.executeUpdate(Query);
+        st.close();
     }
     public void Editar(Alerta Alert) throws SQLException
     {
@@ -37,12 +38,14 @@ public class AlertaDAO {
                 + "WHERE `Alerta_Id`='"+Alert.getId()+"';";
         Statement st = conex.getConnection().createStatement();
         st.executeUpdate(Query);
+        st.close();
     }
     public void Eliminar(Alerta Alert) throws SQLException
     {
         String Query = "DELETE FROM `basededatosceo`.`alerta` WHERE `Alerta_Id`='"+Alert.getId()+"'";
         Statement st = conex.getConnection().createStatement();
         st.executeUpdate(Query);
+        st.close();
     }
     public Alerta Obtener(String Id) throws SQLException
     {
@@ -80,6 +83,8 @@ public class AlertaDAO {
             rs.next();
         }
         retorno = retorno+"]";
+        rs.close();
+        st.close();
         return retorno;
     }
 

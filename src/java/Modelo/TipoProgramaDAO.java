@@ -36,6 +36,8 @@ public class TipoProgramaDAO {
                 rs.next();
             }
             retorno = retorno+"]";
+            rs.close();
+            st.close();
             return retorno;
         } catch (Exception e) {
             return "[\"Ocurrio un error, se debe ingresar manualmente]";
@@ -52,6 +54,8 @@ public class TipoProgramaDAO {
             rs = st.executeQuery(Query);
             rs.next();
             String retorno =(rs.getString(1));
+            rs.close();
+            st.close();
             return Integer.parseInt(retorno);
         } catch (SQLException ex) {
             return 0;
@@ -66,6 +70,8 @@ public class TipoProgramaDAO {
             ResultSet rs = st.executeQuery(Query);
             rs.next();
             String retorno =(rs.getString(1));
+            rs.close();
+            st.close();
             return Integer.parseInt(retorno);
         } catch (SQLException ex) {
             return 0;
@@ -80,6 +86,7 @@ public class TipoProgramaDAO {
                 + "('"+Id+"', '"+Tipo.getNombre()+"', '"+Tipo.getDescripcion()+"');";
         Statement st = conex.getConnection().createStatement();
         st.executeUpdate(Query);
+        st.close();
     }
     
     public TipoPrograma NuevoTipoPrograma(String TipoProgramaId) throws SQLException

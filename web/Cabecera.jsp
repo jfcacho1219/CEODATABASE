@@ -15,7 +15,7 @@
     if(Admi != null)
     {
         Validar = "Bienvenid@ "+Admi.getNombre();
-        Url = "ViewChangeData.jsp";
+        Url = "Login.jsp";
     }
 %>
 
@@ -65,5 +65,5 @@
         
 </head>
     
-    <body> <img src="CEO.png" align="right" width="20%"/> </body>
+    <body> <img src="LOGO CEO.png" align="right" width="20%"/> </body>
 
