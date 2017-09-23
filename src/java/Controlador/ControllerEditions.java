@@ -28,10 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author SONY
- */
+
 @WebServlet(name = "ControllerEditions", urlPatterns = {"/ControllerEditions"})
 public class ControllerEditions extends HttpServlet {
 
@@ -98,8 +95,6 @@ public class ControllerEditions extends HttpServlet {
                 ProgramaPagoDAO ProgramaDAO= new ProgramaPagoDAO();
                 ProgramaPago program = ProgramaDAO.NuevoProgramaPago(TipoProgramaId,NIT);
                 EmpresaDAO CompanyDAO = new EmpresaDAO();
-                //Empresa Company = CompanyDAO.NuevaEmpresa(NIT);
-                //request.setAttribute("Empresa", Company);
                 request.setAttribute("ProgramaPago", program);
                 request.getRequestDispatcher("ProgramEdition.jsp").forward(request, response);
                 
@@ -630,6 +625,4 @@ public class ControllerEditions extends HttpServlet {
         }
         
     }
-
-
 }
