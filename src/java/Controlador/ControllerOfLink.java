@@ -1,20 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controlador;
 
-import Modelo.EmpleadoDAO;
 import Modelo.Empresa;
 import Modelo.EmpresaDAO;
 import Modelo.JuntaDirectivaDAO;
-import Modelo.ProgramaPago;
-import Modelo.ProgramaPagoDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,10 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author SONY
- */
 @WebServlet(name = "ControllerOfLink", urlPatterns = {"/ControllerOfLink"})
 public class ControllerOfLink extends HttpServlet {
 
@@ -102,7 +89,7 @@ public class ControllerOfLink extends HttpServlet {
                 request.setAttribute("VectorScript", ProgramasYPrecios);
                 request.getRequestDispatcher("ViewTable.jsp").forward(request, response); 
             } catch (SQLException ex) {
-                ProgramasYPrecios = "[[\"Error\",\"Error\",\"Error\",\"Error\"]]";
+                System.out.println("Error en controller of link linea 92");
             }
         }
         if (Objeto.equals("NEW")) {
@@ -120,15 +107,7 @@ public class ControllerOfLink extends HttpServlet {
                 System.out.println("Error: "+ex);
                 request.setAttribute("Error","Ocurrió un error al solicitar la empresa de NIT "+NIT);
                 request.getRequestDispatcher("Error.jsp").forward(request, response);
-            }
-            
+            }       
         }
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-    }
-
 }

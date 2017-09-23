@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controlador;
 
 import Modelo.EmpresaDAO;
 import Modelo.ProgramaPagoDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,13 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author SONY
- */
 @WebServlet(name = "ControllerProgramLink", urlPatterns = {"/ControllerProgramLink"})
 public class ControllerProgramLink extends HttpServlet {
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -57,13 +47,7 @@ public class ControllerProgramLink extends HttpServlet {
             request.setAttribute("VectorScript", ProgramasYPagos);
             request.getRequestDispatcher("ViewTable.jsp").forward(request, response); 
         } catch (SQLException ex) {
-            ProgramasYPagos = "[[\"error\",\"error\",\"error\",\"error\",\"error\",\"error\",\"error\",\"error\",\"error\",\"error\",\"error\"]]";
+            System.out.println("Error en controllerprogramlink linea 50");
         }
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    }
-
 }
