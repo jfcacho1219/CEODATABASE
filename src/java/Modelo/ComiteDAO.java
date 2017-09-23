@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,9 +24,12 @@ public class ComiteDAO {
     
     public Comite NuevoComite(String Id) throws SQLException
     {
-        String Query = "select * from comite where Comite_Id = '"+Id+"';";
-        Statement st = conex.getConnection().createStatement();
-        ResultSet rs = st.executeQuery(Query);
+        //nd
+        //String Query = "select * from comite where Comite_Id = '"+Id+"';";
+        String Query2 = "select * from comite where Comite_Id = ? ;";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query2);
+        pr.setString(1, Id);
+        ResultSet rs = pr.executeQuery();
         rs.next();
         return new Comite(rs.getString("Comite_Id"), rs.getString("Comite_Nombre"));
     }
@@ -34,8 +38,11 @@ public class ComiteDAO {
     {
         String Query = "INSERT INTO `basededatosceo`.`comite` (`Comite_Nombre`)"
                 + " VALUES ('"+Comite.getNombre()+"');";
-        Statement st = conex.getConnection().createStatement();
-        st.executeUpdate(Query);
+        String Query2 = "INSERT INTO `basededatosceo`.`comite` (`Comite_Nombre`)"
+                + " VALUES (?);";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query2);
+        pr.setString(1, Comite.getNombre());
+        pr.executeUpdate(Query);
     }
     
     public String ScriptComite() throws SQLException

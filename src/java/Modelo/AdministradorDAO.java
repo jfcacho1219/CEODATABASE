@@ -5,11 +5,11 @@
  */
 package Modelo;
 
-import com.mysql.jdbc.PreparedStatement;
+//import com.mysql.jdbc.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.sql.PreparedStatement;
 /**
  *
  * @author SONY
@@ -49,17 +49,22 @@ public class AdministradorDAO {
         String Query = "INSERT INTO `basededatosceo`.`administradores` (`Admi_Correo`, `Admi_Nombre`,"
                 + " `Admi_Apellidos`, `Admi_Contrasena`) VALUES ('"+Admi.getCorreo()+"', '"+Admi.getNombre()+""
                 + "', '"+Admi.getApellidos()+"', '"+Admi.getContrasena()+"');";
-      
-        Statement st = conex.getConnection().createStatement();
-        st.executeUpdate(Query);   
-        st.close();
+        String Query2 = "INSERT INTO `basededatosceo`.`administradores` (`Admi_Correo`, `Admi_Nombre`,"
+                + " `Admi_Apellidos`, `Admi_Contrasena`) VALUES (?,?,?,?);";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query2);
+        pr.setString(1, Admi.getCorreo());
+        pr.setString(2, Admi.getNombre());
+        pr.setString(3, Admi.getApellidos());
+        pr.setString(4, Admi.getContrasena());
+        pr.executeUpdate(Query);   
+        pr.close();
     }
     
     public Administrador IniciarSesion(String Correo) throws SQLException
     {
         String Query = "SELECT * FROM basededatosceo.administradores where Admi_Correo=?;";
         Statement st = conex.getConnection().createStatement();
-        PreparedStatement pr = (PreparedStatement)conex.getConnection().prepareStatement(Query);
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
         pr.setString(1, Correo);
         ResultSet rs = pr.executeQuery();
         rs.next();
