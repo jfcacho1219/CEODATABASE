@@ -16,12 +16,11 @@ public class Conexion {
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conex = DriverManager.getConnection("jdbc:mysql://localhost/basededatosceo","DBCEO","root");            
+            conex = DriverManager.getConnection("jdbc:mysql://localhost/basededatosceo","root","root");            
         } 
         catch (Exception e) {
             
         }
-        System.out.println("cualquier");
         return conex; 
         
     }

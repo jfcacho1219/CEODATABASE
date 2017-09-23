@@ -72,13 +72,6 @@ public class EmpresaDAO {
             rs.next();
         }
         retorno = retorno+"]";
-        try {
-            Reportes report = new Reportes();
-        } catch (ClassNotFoundException ex) {
-            System.out.println("oeeeeeeeeeee"+ex);
-        } catch (JRException ex) {
-            System.out.println("oeeeeeeeeeee"+ex);
-        }
         rs.close();
         st.close();
         return retorno;
