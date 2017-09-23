@@ -25,18 +25,6 @@ public class EmpresaDAO {
     
     public void Insertar(Empresa Empresa) throws SQLException
     {
-//        String Query = "INSERT INTO `basededatosceo`.`empresa` (`NIT`, `Emp_Nombre`, `Emp_TipoDeSociedad`, "
-//                + "`Emp_AnoCreacion`, `Emp_AnoAfiliacion`, `Emp_SectorProductivo`,"
-//                + " `Emp_NumEmpleados`, `Emp_TamanoEmpresa`, `Emp_Descripcion`, `Emp_SostenimientoPesos`, "
-//                + "`Emp_SostenimientoSalarios`, `Emp_DireccionPlanta`, `Emp_DireccionAdministrativa`, "
-//                + "`Emp_MunicipioPlanta`, `Emp_MunicipioAdministrativa`, `Emp_Activa`) "
-//                + "VALUES ('"+Empresa.getNIT()+"', '"+Empresa.getNombre()+"', '"+Empresa.getSociedad()+""
-//                + "', '"+Empresa.getAnoCreacion()+"', '"+Empresa.getAnoAfiliacion()+"',"
-//                + " '"+Empresa.getSectorProductivo()+"', '"+Empresa.getNumeroEmpleados()+"', '"+Empresa.getTamanoEmpresa()+"'"
-//                + ", '"+Empresa.getDescripcion()+"', '"+Empresa.getSostenimientoPesos()+"', '"+Empresa.getSostemientoSMLV()+"'"
-//                + ", '"+Empresa.getDireccionPlanta()+"',"
-//                + " '"+Empresa.getDireccionAdministrativa()+"', '"+Empresa.getMunicipioPlanta()+"'"
-//                + ", '"+Empresa.getMunicipioAdminitrativa()+"', '"+Empresa.getActiva()+"');";
         String Query = "INSERT INTO `basededatosceo`.`empresa` (`NIT`, `Emp_Nombre`, `Emp_TipoDeSociedad`, "
                 + "`Emp_AnoCreacion`, `Emp_AnoAfiliacion`, `Emp_SectorProductivo`,"
                 + " `Emp_NumEmpleados`, `Emp_TamanoEmpresa`, `Emp_Descripcion`, `Emp_SostenimientoPesos`, "
@@ -70,9 +58,10 @@ public class EmpresaDAO {
         if (Afiliada.equals("NoAffiliatedCompany")) {
             Activa="NO";
         }
-        String Query = "select * from empresa where Emp_Activa='"+Activa+"' order by Emp_Nombre";
-        Statement st = conex.getConnection().createStatement();
-        ResultSet rs = st.executeQuery(Query);
+        String Query = "select * from empresa where Emp_Activa=? order by Emp_Nombre";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, Activa);
+        ResultSet rs = pr.executeQuery();
         String retorno = "[";
         
         rs.next();
@@ -96,34 +85,55 @@ public class EmpresaDAO {
         }
         retorno = retorno+"]";
         rs.close();
-        st.close();
+        pr.close();
         return retorno;
     }
     
     public Empresa NuevaEmpresa(String NIT) throws SQLException {
-        String Query = "select * from empresa where NIT = '"+NIT+"';";
-        Statement st = conex.getConnection().createStatement();
-        ResultSet rs = st.executeQuery(Query);
+        String Query = "select * from empresa where NIT = ?;";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, NIT);
+        ResultSet rs = pr.executeQuery();
         rs.next();
-        return new Empresa(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),
+        Empresa empresa = new Empresa(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),
                 rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),
                 rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14),
                 rs.getString(15),rs.getString(16));
+        rs.close();
+        rs.close();
+        pr.close();
+        return empresa;
     }
 
     public void Editar(Empresa Company,String NIT) throws SQLException {
-        //falta poner NIT //`NIT`='Company.getNIT()'
-        String Query = "UPDATE `basededatosceo`.`empresa` SET `Emp_Nombre`='"+Company.getNombre()+"',"
-                + "`NIT`='"+Company.getNIT()+"', `Emp_TipoDeSociedad`='"+Company.getSociedad()+"',"
-                + " `Emp_AnoCreacion`='"+Company.getAnoCreacion()+"', `Emp_AnoAfiliacion`='"+Company.getAnoAfiliacion()+"',"
-                + "`Emp_SectorProductivo`='"+Company.getSectorProductivo()+"', `Emp_NumEmpleados`='"+Company.getNumeroEmpleados()+"', "
-                + "`Emp_TamanoEmpresa`='"+Company.getTamanoEmpresa()+"', `Emp_Descripcion`='"+Company.getDescripcion()+"', "
-                + "`Emp_SostenimientoPesos`='"+Company.getSostenimientoPesos()+"', `Emp_SostenimientoSalarios`='"+Company.getSostemientoSMLV()+"',"
-                + " `Emp_DireccionPlanta`='"+Company.getDireccionPlanta()+"', `Emp_DireccionAdministrativa`='"+Company.getDireccionAdministrativa()+"',"
-                + " `Emp_MunicipioPlanta`='"+Company.getMunicipioPlanta()+"', `Emp_MunicipioAdministrativa`='"+Company.getMunicipioAdminitrativa()+"',"
-                + " `Emp_Activa`='"+Company.getActiva()+"' WHERE `NIT`='"+NIT+"';";
-        Statement st = conex.getConnection().createStatement();
-        st.executeUpdate(Query);
+        String Query = "UPDATE `basededatosceo`.`empresa` SET `Emp_Nombre`=?,"
+                + "`NIT`=?, `Emp_TipoDeSociedad`=?,"
+                + " `Emp_AnoCreacion`=?, `Emp_AnoAfiliacion`=?,"
+                + "`Emp_SectorProductivo`=?, `Emp_NumEmpleados`=?, "
+                + "`Emp_TamanoEmpresa`=?, `Emp_Descripcion`=?, "
+                + "`Emp_SostenimientoPesos`=?, `Emp_SostenimientoSalarios`=?,"
+                + " `Emp_DireccionPlanta`=?, `Emp_DireccionAdministrativa`=?,"
+                + " `Emp_MunicipioPlanta`=?, `Emp_MunicipioAdministrativa`=?,"
+                + " `Emp_Activa`=? WHERE `NIT`=?;";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, Company.getNombre());
+        pr.setString(2, Company.getNIT());
+        pr.setString(3, Company.getSociedad());
+        pr.setString(4, Company.getAnoCreacion());
+        pr.setString(5, Company.getAnoAfiliacion());
+        pr.setString(6, Company.getSectorProductivo());
+        pr.setString(7, Company.getNumeroEmpleados());
+        pr.setString(8, Company.getTamanoEmpresa());
+        pr.setString(9, Company.getDescripcion());
+        pr.setString(10,Company.getSostenimientoPesos());
+        pr.setString(11, Company.getSostemientoSMLV());
+        pr.setString(12, Company.getDireccionPlanta());
+        pr.setString(13, Company.getDireccionAdministrativa());
+        pr.setString(14, Company.getMunicipioPlanta());
+        pr.setString(15, Company.getMunicipioAdminitrativa());
+        pr.setString(16, Company.getActiva());
+        pr.setString(17, NIT);
+        pr.executeUpdate();
     }
     
     public void Eliminar(String NIT) throws SQLException
@@ -210,49 +220,4 @@ public class EmpresaDAO {
         return retorno;
     }
 
-    /*public void getReports(String ruta)throws  ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException
-    {
-        Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection conexion2;
-        conexion2 = DriverManager.getConnection("jdbc:mysql://localhost/basededatosceo","DBCEO","root"); 
-        Map Parameter = new HashMap();
-        try {
-             File file = new File(ruta);
-
-            HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-
-            httpServletResponse.setContentType("application/vnd.ms-excel");
-            httpServletResponse.addHeader("Content-Disposition", "attachment; filename="+"OutStanding_DC_Report"+".xlsx");
-
-            JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());
-
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, Parameter, conexion2);
-
-            JRExporter jrExporter = null;                      
-            jrExporter = new JRXlsExporter();
-            jrExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-            jrExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, httpServletResponse.getOutputStream());
-
-            try {
-                jrExporter.exportReport();
-            } catch (JRException e) {
-                e.printStackTrace();
-            }
-
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally{
-            if(conex.getConnection()!=null)
-            {
-                try {
-                    conex.getConnection().close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        
-    }*/
 }
