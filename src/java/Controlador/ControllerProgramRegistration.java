@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controlador;
 
 import Modelo.Administrador;
-import Modelo.Comite;
 import Modelo.Ediciones;
 import Modelo.EdicionesDAO;
 import Modelo.Empleado;
@@ -19,21 +14,13 @@ import Modelo.ProgramaPagoDAO;
 import Modelo.TipoPrograma;
 import Modelo.TipoProgramaDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author SONY
- */
 @WebServlet(name = "ControllerProgramRegistration", urlPatterns = {"/ControllerProgramRegistration"})
 public class ControllerProgramRegistration extends HttpServlet {
 
@@ -80,7 +67,7 @@ public class ControllerProgramRegistration extends HttpServlet {
                 request.getRequestDispatcher("Error.jsp").forward(request, response);
             }
         }
-        Persona Person =  new Persona("", Cedula, Nombre, Apellidos, Cumple, Titulo,Cargo);
+        Persona Person;
         PersonaDAO PersonDAO  = new PersonaDAO();
         String PersonaId = null;
         ProgramaPago programaPago;
@@ -125,14 +112,6 @@ public class ControllerProgramRegistration extends HttpServlet {
             request.setAttribute("Mensaje", "Programa, y su encargado "+Nombre+" "+"Registrados con éxito");
             request.getRequestDispatcher("Inicio.jsp").forward(request, response);    
         }
-        
     }
-
-    
-    
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }
