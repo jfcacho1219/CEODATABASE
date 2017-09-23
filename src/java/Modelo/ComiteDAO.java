@@ -24,8 +24,6 @@ public class ComiteDAO {
     
     public Comite NuevoComite(String Id) throws SQLException
     {
-        //nd
-        //String Query = "select * from comite where Comite_Id = '"+Id+"';";
         String Query2 = "select * from comite where Comite_Id = ? ;";
         PreparedStatement pr = conex.getConnection().prepareStatement(Query2);
         pr.setString(1, Id);
@@ -36,13 +34,10 @@ public class ComiteDAO {
     
     public void Insertar(Comite Comite) throws SQLException
     {
-        String Query = "INSERT INTO `basededatosceo`.`comite` (`Comite_Nombre`)"
-                + " VALUES ('"+Comite.getNombre()+"');";
-        String Query2 = "INSERT INTO `basededatosceo`.`comite` (`Comite_Nombre`)"
-                + " VALUES (?);";
-        PreparedStatement pr = conex.getConnection().prepareStatement(Query2);
+        String Query = "INSERT INTO `basededatosceo`.`comite` (`Comite_Nombre`) VALUES (?);";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
         pr.setString(1, Comite.getNombre());
-        pr.executeUpdate(Query);
+        pr.executeUpdate();
     }
     
     public String ScriptComite() throws SQLException
@@ -67,9 +62,10 @@ public class ComiteDAO {
     }
 
     public String ObtenerId(String Comite) throws SQLException {
-        String Query = "select Comite_Id from comite where Comite_Nombre = '"+Comite+"';";
-        Statement st = conex.getConnection().createStatement();
-        ResultSet rs = st.executeQuery(Query);
+        String Query = "select Comite_Id from comite where Comite_Nombre = ?;";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, Comite);
+        ResultSet rs = pr.executeQuery();
         rs.next();
         return rs.getString(1);
     }

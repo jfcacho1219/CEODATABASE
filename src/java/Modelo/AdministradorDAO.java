@@ -47,16 +47,13 @@ public class AdministradorDAO {
     public void IngresarAdministrador(Administrador Admi) throws SQLException
     {
         String Query = "INSERT INTO `basededatosceo`.`administradores` (`Admi_Correo`, `Admi_Nombre`,"
-                + " `Admi_Apellidos`, `Admi_Contrasena`) VALUES ('"+Admi.getCorreo()+"', '"+Admi.getNombre()+""
-                + "', '"+Admi.getApellidos()+"', '"+Admi.getContrasena()+"');";
-        String Query2 = "INSERT INTO `basededatosceo`.`administradores` (`Admi_Correo`, `Admi_Nombre`,"
                 + " `Admi_Apellidos`, `Admi_Contrasena`) VALUES (?,?,?,?);";
-        PreparedStatement pr = conex.getConnection().prepareStatement(Query2);
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
         pr.setString(1, Admi.getCorreo());
         pr.setString(2, Admi.getNombre());
         pr.setString(3, Admi.getApellidos());
         pr.setString(4, Admi.getContrasena());
-        pr.executeUpdate(Query);   
+        pr.executeUpdate();   
         pr.close();
     }
     

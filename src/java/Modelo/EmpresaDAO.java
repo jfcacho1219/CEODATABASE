@@ -6,6 +6,7 @@
 package Modelo;
 
 import Reportes.Reportes;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,21 +25,43 @@ public class EmpresaDAO {
     
     public void Insertar(Empresa Empresa) throws SQLException
     {
+//        String Query = "INSERT INTO `basededatosceo`.`empresa` (`NIT`, `Emp_Nombre`, `Emp_TipoDeSociedad`, "
+//                + "`Emp_AnoCreacion`, `Emp_AnoAfiliacion`, `Emp_SectorProductivo`,"
+//                + " `Emp_NumEmpleados`, `Emp_TamanoEmpresa`, `Emp_Descripcion`, `Emp_SostenimientoPesos`, "
+//                + "`Emp_SostenimientoSalarios`, `Emp_DireccionPlanta`, `Emp_DireccionAdministrativa`, "
+//                + "`Emp_MunicipioPlanta`, `Emp_MunicipioAdministrativa`, `Emp_Activa`) "
+//                + "VALUES ('"+Empresa.getNIT()+"', '"+Empresa.getNombre()+"', '"+Empresa.getSociedad()+""
+//                + "', '"+Empresa.getAnoCreacion()+"', '"+Empresa.getAnoAfiliacion()+"',"
+//                + " '"+Empresa.getSectorProductivo()+"', '"+Empresa.getNumeroEmpleados()+"', '"+Empresa.getTamanoEmpresa()+"'"
+//                + ", '"+Empresa.getDescripcion()+"', '"+Empresa.getSostenimientoPesos()+"', '"+Empresa.getSostemientoSMLV()+"'"
+//                + ", '"+Empresa.getDireccionPlanta()+"',"
+//                + " '"+Empresa.getDireccionAdministrativa()+"', '"+Empresa.getMunicipioPlanta()+"'"
+//                + ", '"+Empresa.getMunicipioAdminitrativa()+"', '"+Empresa.getActiva()+"');";
         String Query = "INSERT INTO `basededatosceo`.`empresa` (`NIT`, `Emp_Nombre`, `Emp_TipoDeSociedad`, "
                 + "`Emp_AnoCreacion`, `Emp_AnoAfiliacion`, `Emp_SectorProductivo`,"
                 + " `Emp_NumEmpleados`, `Emp_TamanoEmpresa`, `Emp_Descripcion`, `Emp_SostenimientoPesos`, "
                 + "`Emp_SostenimientoSalarios`, `Emp_DireccionPlanta`, `Emp_DireccionAdministrativa`, "
                 + "`Emp_MunicipioPlanta`, `Emp_MunicipioAdministrativa`, `Emp_Activa`) "
-                + "VALUES ('"+Empresa.getNIT()+"', '"+Empresa.getNombre()+"', '"+Empresa.getSociedad()+""
-                + "', '"+Empresa.getAnoCreacion()+"', '"+Empresa.getAnoAfiliacion()+"',"
-                + " '"+Empresa.getSectorProductivo()+"', '"+Empresa.getNumeroEmpleados()+"', '"+Empresa.getTamanoEmpresa()+"'"
-                + ", '"+Empresa.getDescripcion()+"', '"+Empresa.getSostenimientoPesos()+"', '"+Empresa.getSostemientoSMLV()+"'"
-                + ", '"+Empresa.getDireccionPlanta()+"',"
-                + " '"+Empresa.getDireccionAdministrativa()+"', '"+Empresa.getMunicipioPlanta()+"'"
-                + ", '"+Empresa.getMunicipioAdminitrativa()+"', '"+Empresa.getActiva()+"');";
-        Statement st = conex.getConnection().createStatement();
-        st.executeUpdate(Query);
-        System.out.println(Query);
+                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";   
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, Empresa.getNIT());
+        pr.setString(2, Empresa.getNombre());
+        pr.setString(3, Empresa.getSociedad());
+        pr.setString(4, Empresa.getAnoCreacion());
+        pr.setString(5, Empresa.getAnoAfiliacion());
+        pr.setString(6, Empresa.getSectorProductivo());
+        pr.setString(7, Empresa.getNumeroEmpleados());
+        pr.setString(8, Empresa.getTamanoEmpresa());
+        pr.setString(9, Empresa.getDescripcion());
+        pr.setString(10,Empresa.getSostenimientoPesos());
+        pr.setString(11, Empresa.getSostemientoSMLV());
+        pr.setString(12, Empresa.getDireccionPlanta());
+        pr.setString(13, Empresa.getDireccionAdministrativa());
+        pr.setString(14, Empresa.getMunicipioPlanta());
+        pr.setString(15, Empresa.getMunicipioAdminitrativa());
+        pr.setString(16, Empresa.getActiva());
+        pr.executeUpdate();
+        pr.close();
        
     }
 
