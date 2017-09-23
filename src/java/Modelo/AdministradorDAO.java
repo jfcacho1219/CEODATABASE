@@ -62,6 +62,7 @@ public class AdministradorDAO {
         Statement st = conex.getConnection().createStatement();
         PreparedStatement pr = (PreparedStatement)conex.getConnection().prepareStatement(Query2);
         pr.setString(1, Correo);
+        
         ResultSet rs = st.executeQuery(Query);
         rs = pr.executeQuery();
         rs.next();
