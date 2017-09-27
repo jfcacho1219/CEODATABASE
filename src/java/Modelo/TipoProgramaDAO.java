@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -77,16 +78,19 @@ public class TipoProgramaDAO {
         int Id = ObtenerIdMayor() +1;
         String Query = "INSERT INTO `basededatosceo`.`tipoprograma` (`TipPrograma_Id`,"
                 + " `TipoPrograma_Nombre`, `Descripciòn`) VALUES "
-                + "('"+Id+"', '"+Tipo.getNombre()+"', '"+Tipo.getDescripcion()+"');";
-        Statement st = conex.getConnection().createStatement();
-        st.executeUpdate(Query);
+                + "('"+Id+"', ?, ?);";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, Tipo.getNombre());
+        pr.setString(2, Tipo.getDescripcion());
+        pr.executeUpdate();
     }
     
     public TipoPrograma NuevoTipoPrograma(String TipoProgramaId) throws SQLException
     {
         String Query = "select * from tipoprograma where TipPrograma_Id='"+TipoProgramaId+"';";
-        Statement st = conex.getConnection().createStatement();
-        ResultSet rs = st.executeQuery(Query);
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, TipoProgramaId);
+        ResultSet rs = pr.executeQuery();
         rs.next();
         return new TipoPrograma(TipoProgramaId, rs.getString("TipoPrograma_Nombre"), rs.getString("Descripciòn"));
     }

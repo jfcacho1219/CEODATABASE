@@ -89,9 +89,11 @@ public class ProgramaPagoDAO {
     }
 
     public ProgramaPago NuevoProgramaPago(String TipoProgramaId, String NIT) throws SQLException {
-        String Query = "select * from programapago where TipPrograma_Id = '"+TipoProgramaId+"' and NIT='"+NIT+"';";
-        Statement st  = conex.getConnection().createStatement();
-        ResultSet rs = st.executeQuery(Query);
+        String Query = "select * from programapago where TipPrograma_Id = ? and NIT=?;";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, TipoProgramaId);
+        pr.setString(2, NIT);
+        ResultSet rs = pr.executeQuery();
         rs.next();
         return new ProgramaPago(rs.getString("ProgramaPago_Pago"),
                 new TipoProgramaDAO().NuevoTipoPrograma(TipoProgramaId),
@@ -100,11 +102,16 @@ public class ProgramaPagoDAO {
     
     public void Editar(ProgramaPago Program, String TipoIdViejo) throws SQLException
     {
-        String Query ="UPDATE `basededatosceo`.`programapago` SET `TipPrograma_Id`='"+Program.getTipo().getId()+"',"
-            + " `ProgramaPago_Pago`='"+Program.getPago()+"', `Persona_Id`='"+Program.getEmple().getPersona().getId()+"'"
-            + "WHERE `TipPrograma_Id`='"+TipoIdViejo+"' and `NIT`='"+Program.getEmple().getEmpresa().getNIT()+"';";
-        Statement st = conex.getConnection().createStatement();
-        st.executeUpdate(Query);
+        String Query ="UPDATE `basededatosceo`.`programapago` SET `TipPrograma_Id`=?,"
+            + " `ProgramaPago_Pago`=?, `Persona_Id`=?"
+            + "WHERE `TipPrograma_Id`=? and `NIT`=?;";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, Program.getTipo().getId());
+        pr.setString(2, Program.getPago());
+        pr.setString(3, Program.getEmple().getPersona().getId());
+        pr.setString(4, TipoIdViejo);
+        pr.setString(5, Program.getEmple().getEmpresa().getNIT());
+        pr.executeUpdate();
     }
 
     public String ObtenerProgramasYEncargados(ProgramaPago Program) throws SQLException {
@@ -153,17 +160,30 @@ public class ProgramaPagoDAO {
                 + "em.Empleado_Email2, p.Persona_Cumple, p.Persona_Cedula,pg.TipPrograma_Id,pg.NIT,"
                 + "pg.Empleado_Id,pg.Persona_Id from empresa e natural join programapago pg natural join "
                 + "tipoprograma tp natural join persona p natural join empleado em"
-                + " where tp.TipoPrograma_Nombre like '%"+Program.getTipo().getNombre()+"%' and e.NIT like '%"+Program.getEmple().getEmpresa().getNIT()+"%'"
-                + " and e.Emp_Nombre like '%"+Program.getEmple().getEmpresa().getNombre()+"%' and "
-                + "em.Empleado_Email1 like '%"+Program.getEmple().getEmail1()+"%' and em.Empleado_Email2 like '%"+Program.getEmple().getEmail2()+"%' "
-                + "and em.Empleado_Telefono1 like '%"+Program.getEmple().getTelefono1()+"%' and em.Empleado_Telefono2 like '%"+Program.getEmple().getTelefono2()+"%'"
-                + " and "+QueryPago+" and p.Persona_Cedula like '%"+Program.getEmple().getPersona().getCedula()+"%' and p.Persona_Nombre like '%"+Program.getEmple().getPersona().getNombre()+"%'"
-                + " and p.Persona_Apellidos like '%"+Program.getEmple().getPersona().getApellidos()+"%' and p.Persona_Titulo like '%"+Program.getEmple().getPersona().getTitulo()+"%' "
-                + " and p.Persona_Cargo like '%"+Program.getEmple().getPersona().getCargo()+"%' and "+QueryCumpleanos+""
+                + " where tp.TipoPrograma_Nombre like ? and e.NIT like ?"
+                + " and e.Emp_Nombre like ? and "
+                + "em.Empleado_Email1 like ? and em.Empleado_Email2 like ? "
+                + "and em.Empleado_Telefono1 like ? and em.Empleado_Telefono2 like ?"
+                + " and "+QueryPago+" and p.Persona_Cedula like ? and p.Persona_Nombre like ?"
+                + " and p.Persona_Apellidos like ? and p.Persona_Titulo like ? "
+                + " and p.Persona_Cargo like ? and "+QueryCumpleanos+""
                 + " order by e.Emp_Nombre;";
         
-        Statement st = conex.getConnection().createStatement();
-        ResultSet rs = st.executeQuery(Query);
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, Program.getTipo().getNombre() );
+        pr.setString(2, Program.getEmple().getEmpresa().getNIT() );
+        pr.setString(3, Program.getEmple().getEmpresa().getNombre());
+        pr.setString(4, Program.getEmple().getEmail1());
+        pr.setString(5, Program.getEmple().getEmail2());
+        pr.setString(6, Program.getEmple().getTelefono1());
+        pr.setString(7, Program.getEmple().getTelefono2());
+        pr.setString(8, Program.getEmple().getPersona().getCedula());
+        pr.setString(9, Program.getEmple().getPersona().getNombre());
+        pr.setString(10, Program.getEmple().getPersona().getApellidos());
+        pr.setString(11, Program.getEmple().getPersona().getTitulo());
+        pr.setString(12, Program.getEmple().getPersona().getCargo());
+     
+        ResultSet rs = pr.executeQuery();
         String retorno = "[";
         rs.next();
         while (rs.getRow() != 0)

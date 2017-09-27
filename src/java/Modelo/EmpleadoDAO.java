@@ -64,11 +64,18 @@ public class EmpleadoDAO {
         String IdS = Integer.toString(Id);
         String Query = "INSERT INTO `basededatosceo`.`empleado` (`Empleado_Id`, `NIT`, `Empleado_Email1`,"
                 + " `Empleado_Email2`, `Empleado_Telefono1`, `Empleado_Telefono2`, `Persona_Id`"
-                + " ) VALUES ('"+IdS+"', '"+Empleo.getEmpresa().getNIT()+"', '"+Empleo.getEmail1()+"', '"+Empleo.getEmail2()+"',"
-                + " '"+Empleo.getTelefono1()+"', '"+Empleo.getTelefono2()+"', '"+Empleo.getPersona().getId()+"');";
+                + " ) VALUES (?, ?, ?, ?,"
+                + " ?, ?, '?);";
         System.out.println(Query);
-        Statement st = conex.getConnection().createStatement();
-        st.executeUpdate(Query);
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, IdS);
+        pr.setString(2, Empleo.getEmpresa().getNIT());
+        pr.setString(3, Empleo.getEmail1());
+        pr.setString(4, Empleo.getEmail2());
+        pr.setString(5, Empleo.getTelefono1());
+        pr.setString(6, Empleo.getTelefono2());
+        pr.setString(7, Empleo.getPersona().getId());
+        pr.executeUpdate();
     }
 
   public String ObtenerCargosYPersonas(String Comite) throws SQLException {
@@ -161,7 +168,7 @@ public class EmpleadoDAO {
         Statement st = conex.getConnection().createStatement();
         st.executeUpdate(Query);
     }
-
+     
     public String ObtenerCargosYPersonas(Empleado Emple) throws SQLException {
         String QueryCumpleanos = null;
         String Cumpleanos1;

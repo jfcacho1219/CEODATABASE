@@ -67,10 +67,11 @@ public class JuntaDirectivaDAO {
         String Query = "select a.NIT,a.ProgramaPago_Pago, tp2.TipoPrograma_Nombre,tp2.TipPrograma_Id "
                 + "from (select pg.NIT,pg.ProgramaPago_Pago,pg.TipPrograma_Id as TIPO "
                 + "from programapago pg left join tipoprograma tp on"
-                + " pg.TipPrograma_Id = tp.TipPrograma_Id where pg.NIT = '"+NIT+"') as a "
+                + " pg.TipPrograma_Id = tp.TipPrograma_Id where pg.NIT = ?) as a "
                 + "right join tipoprograma tp2 on a.TIPO = tp2.TipPrograma_Id;";
-        Statement st = conex.getConnection().createStatement();
-        ResultSet rs = st.executeQuery(Query);
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, NIT);
+        ResultSet rs = pr.executeQuery();
         String retorno = "[";
         rs.next();
         
@@ -98,24 +99,28 @@ public class JuntaDirectivaDAO {
     
     public void Editar(JuntaDirectiva Junta) throws SQLException
     {
-        String Query  = "UPDATE `basededatosceo`.`juntadirectiva` SET `Junta_Tipo`='"+Junta.getCalidad()+"'"
-                + " WHERE `Junta_Id`='"+Junta.getID()+"';";
-        Statement st = conex.getConnection().createStatement();
-        st.executeUpdate(Query);
+        String Query  = "UPDATE `basededatosceo`.`juntadirectiva` SET `Junta_Tipo`=?"
+                + " WHERE `Junta_Id`=?;";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, Junta.getCalidad());
+        pr.setString(2, Junta.getID());
+        pr.executeUpdate();
     }
     
     public void Eliminar(String Id) throws SQLException
     {
-        String Query = "DELETE FROM `basededatosceo`.`juntadirectiva` WHERE `Junta_Id`='"+Id+"';";
-        Statement st = conex.getConnection().createStatement();
-        st.executeUpdate(Query);
+        String Query = "DELETE FROM `basededatosceo`.`juntadirectiva` WHERE `Junta_Id`=?;";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, Id);
+        pr.executeUpdate();
     }
     
     public JuntaDirectiva NuevaJuntaDirectiva(String IdJunta) throws SQLException
     {
-        String Query = "select * from juntadirectiva where Junta_Id='"+IdJunta+"';";
-        Statement st = conex.getConnection().createStatement();
-        ResultSet rs = st.executeQuery(Query);
+        String Query = "select * from juntadirectiva where Junta_Id=?;";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, IdJunta);
+        ResultSet rs = pr.executeQuery();
         rs.next();
         return new JuntaDirectiva(rs.getString("Junta_Id"), rs.getString("Junta_Tipo"), rs.getString("NIT"),
             rs.getString("Empleado_Id"),rs.getString("Persona_Id")); 
