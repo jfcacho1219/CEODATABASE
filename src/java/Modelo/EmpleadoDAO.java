@@ -131,10 +131,13 @@ public class EmpleadoDAO {
     }
 
     public Empleado NuevoEmpleado(String NIT, String PersonaId, String EmpleadoId) throws SQLException {
-        String Query = "select * from empleado where `NIT`='"+NIT+"' "
-                + "and`Empleado_Id`='"+EmpleadoId+"' and`Persona_Id`='"+PersonaId+"';";
-        Statement st = conex.getConnection().createStatement();
-        ResultSet rs = st.executeQuery(Query);
+        String Query = "select * from empleado where `NIT`=? "
+                + "and`Empleado_Id`='? and`Persona_Id`=?;";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, NIT);
+        pr.setString(2, EmpleadoId);
+        pr.setString(3, PersonaId);
+        ResultSet rs = pr.executeQuery();
         rs.next();
         Comite Comite;
         String Hola = rs.getString("Comite_Id");
