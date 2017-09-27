@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,10 +25,13 @@ public class JuntaDirectivaDAO {
     public void InsertarJunta(JuntaDirectiva Junta) throws SQLException
     {
         String Query = "INSERT INTO `basededatosceo`.`juntadirectiva` (`Junta_Tipo`, `NIT`, `Empleado_Id`"
-                + ") VALUES ('"+Junta.getCalidad()+"', '"+Junta.getNIT()+"', '"+Junta.getEmpleadoId()+"');";
-        Statement st = conex.getConnection().createStatement();
+                + ") VALUES (?, ?, ?);";
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, Junta.getCalidad());
+        pr.setString(2, Junta.getNIT());
+        pr.setString(3, Junta.getEmpleadoId());
         System.out.println(Query);
-        st.executeUpdate(Query);
+        pr.executeUpdate();
     }
 
     public String ObtenerJuntaYEmpresa() throws SQLException {

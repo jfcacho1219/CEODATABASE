@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,11 +29,16 @@ public class ProgramaPagoDAO {
         */
         String Query = "INSERT INTO `basededatosceo`.`programapago` (`TipPrograma_Id`, `ProgramaPago_Pago`, "
                 + "`NIT`, `Empleado_Id`, `Persona_Id`) VALUES"
-                + " ('"+Program.getTipo().getId()+"', '"+Program.getPago()+"', '"+Program.getEmple().getEmpresa().getNIT()+"',"
-                + " '"+Program.getEmple().getID()+"', '"+Program.getEmple().getPersona().getId()+"');";
+                + " (?, ?, ?," 
+                + " ?, ?);";         
         System.out.println(Query);
-        Statement st = conex.getConnection().createStatement();
-        st.executeUpdate(Query);
+        PreparedStatement pr = conex.getConnection().prepareStatement(Query);
+        pr.setString(1, Program.getTipo().getId());
+        pr.setString(2, Program.getPago());
+        pr.setString(3, Program.getEmple().getEmpresa().getNIT());
+        pr.setString(4, Program.getEmple().getID());
+        pr.setString(5, Program.getEmple().getPersona().getId());
+        pr.executeUpdate();
     }
 
     public String ObtenerProgramasYEncargados(String Programa) throws SQLException {
