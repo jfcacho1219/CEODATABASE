@@ -1,10 +1,6 @@
 
 package Modelo;
 
-/**
- *
- * @author SONY
- */
 public class Empleado {
     private String ID;
     private Empresa Empresa;

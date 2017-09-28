@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo;
 
 import java.sql.PreparedStatement;
@@ -10,10 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- *
- * @author SONY
- */
 public class EmpleadoDAO {
     Conexion conex;
     public EmpleadoDAO()
@@ -103,7 +94,6 @@ public class EmpleadoDAO {
                     + " (select Comite_Nombre from comite where Comite_Id<11)) "
                     + "as em natural join persona p where e.Emp_Activa = 'YES' order by e.Emp_Nombre";
             MaxFor = 18;
-            //Query="select p.Persona_Titulo,p.Persona_Nombre,p.Persona_Apellidos,p.Persona_Cargo,e.Emp_Nombre,e.Emp_DireccionAdministrativa,em.Empleado_Telefono1,em.Empleado_Telefono2,em.Empleado_Email1,em.Empleado_Email2,p.Persona_Cumple,p.Persona_Cedula,e.NIT,em.Empleado_Id,em.Persona_Id,em.Comite_Id from empresa e natural join (select * from empleado natural join comite where  Comite_Nombre!='Gerentes' and Comite_Nombre!='Gestión Humana' and Comite_Nombre!='Comercio Exterior' and Comite_Nombre!='Técnico' and Comite_Nombre!='Compras' and Comite_Nombre!='Seguridad' and Comite_Nombre!='Ambiental' and Comite_Nombre!='Tics' and Comite_Nombre!='MYPES') as em natural join persona p order by e.Emp_Nombre";
         }
         Statement st  = conex.getConnection().createStatement();
         ResultSet rs = st.executeQuery(Query);

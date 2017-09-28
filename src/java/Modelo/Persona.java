@@ -1,11 +1,5 @@
 package Modelo;
 
-import java.util.Date;
-
-/**
- *
- * @author SONY
- */
 public class Persona {
     private String Id;
     private String Cedula;

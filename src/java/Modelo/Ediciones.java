@@ -1,12 +1,6 @@
 
 package Modelo;
 
-import java.util.Date;
-
-/**
- *
- * @author SONY
- */
 public class Ediciones {
     private String ID;
     private String FechaEdicion;

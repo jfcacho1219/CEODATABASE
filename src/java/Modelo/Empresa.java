@@ -1,9 +1,5 @@
 package Modelo;
 
-/**
- *
- * @author JULIAN CARVAJAL MONTOYA
- */
 public class Empresa {
     public String NIT;
     public String Nombre;

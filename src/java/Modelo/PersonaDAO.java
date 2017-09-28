@@ -1,20 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Modelo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- *
- * @author SONY
- */
+
 public class PersonaDAO {
     Conexion conex;
     public PersonaDAO()
@@ -39,16 +30,6 @@ public class PersonaDAO {
         pr.executeUpdate();
     }
 
-    
-
-    /*public void Editar(Persona Person) throws SQLException {
-        String Query = "UPDATE `basededatosceo`.`persona` SET `Persona_Cedula`='"+Person.getCedula()+"', "
-                + "`Persona_Nombre`='"+Person.getNombre()+"', `Persona_Apellidos`='"+Person.getApellidos()+"',"
-                + " `Persona_Cumple`='"+Person.getCumpleanos()+"', `Persona_Titulo`='"+Person.getTitulo()+"',"
-                + " `Persona_Cargo`='"+Person.getCargo()+"' WHERE `Persona_Id`='"+Person.getId()+"';";
-        Statement st = conex.getConnection().createStatement();
-        st.executeUpdate(Query);
-    }*/
     public void Editar(Persona Person) throws SQLException {
         String Query = "UPDATE `basededatosceo`.`persona` SET `Persona_Cedula`=?, "
                 + "`Persona_Nombre`=?, `Persona_Apellidos`=?,"
@@ -65,11 +46,6 @@ public class PersonaDAO {
         pr.executeUpdate();
     }
 
-    /*public void Eliminar(String Id) throws SQLException {
-        String Query = "DELETE FROM `basededatosceo`.`persona` WHERE `Persona_Id`='"+Id+"';";
-        Statement st = conex.getConnection().createStatement();
-        st.executeUpdate(Query);
-    }*/
     public void Eliminar(String Id) throws SQLException {
         String Query = "DELETE FROM `basededatosceo`.`persona` WHERE `Persona_Id`=?;";
         PreparedStatement pr = conex.getConnection().prepareStatement(Query);
@@ -91,17 +67,6 @@ public class PersonaDAO {
         }   
     }
     
-    /*public String ObtenerId(Persona Person) throws SQLException
-    {
-        String Query = "select * from persona where Persona_Cedula='"+Person.getCedula()+"' and Persona_Nombre='"+Person.getNombre()+"'"
-                + " and Persona_Apellidos='"+Person.getApellidos()+"' and Persona_Cumple='"+Person.getCumpleanos()+"'"
-                + " and Persona_Titulo='"+Person.getTitulo()+"' and Persona_Cargo='"+Person.getCargo()+"' "
-                + "order by Persona_Id desc";
-        Statement st = conex.getConnection().createStatement();
-        ResultSet rs = st.executeQuery(Query);
-        rs.next();
-        return rs.getString(1);
-    }*/
     public String ObtenerId(Persona Person) throws SQLException
     {
         String Query = "select * from persona where Persona_Cedula=? and Persona_Nombre=?"

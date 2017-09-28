@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Modelo;
 
 import java.sql.PreparedStatement;
@@ -11,10 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 
-/**
- *
- * @author SONY
- */
 public class ProgramaPagoDAO {
     Conexion conex;
     public ProgramaPagoDAO(){
@@ -23,15 +15,10 @@ public class ProgramaPagoDAO {
     
     public void Insertar(ProgramaPago Program) throws SQLException
     {
-        /*String Query = "INSERT INTO `basededatosceo`.`programapago` (`TipPrograma_Id`, `ProgramaPago_Pago`,"
-                + " `NIT`, `Empleado_Id`) VALUES ('"+Program.getTipo().getId()+"', '"+Program.getPago()+"',"
-                + " '"+Program.getEmple().getEmpresa().getNIT()+"', '"+Program.getEmple().getPersona().getId()+"');";
-        */
         String Query = "INSERT INTO `basededatosceo`.`programapago` (`TipPrograma_Id`, `ProgramaPago_Pago`, "
                 + "`NIT`, `Empleado_Id`, `Persona_Id`) VALUES"
                 + " (?, ?, ?," 
                 + " ?, ?);";         
-        System.out.println(Query);
         PreparedStatement pr = conex.getConnection().prepareStatement(Query);
         pr.setString(1, Program.getTipo().getId());
         pr.setString(2, Program.getPago());
@@ -39,6 +26,7 @@ public class ProgramaPagoDAO {
         pr.setString(4, Program.getEmple().getID());
         pr.setString(5, Program.getEmple().getPersona().getId());
         pr.executeUpdate();
+        pr.close();
     }
 
     public String ObtenerProgramasYEncargados(String Programa) throws SQLException {
