@@ -119,6 +119,15 @@ public class PersonaDAO {
         rs.next();
         return rs.getString(1);
     }
+    
+    public Persona NuevaPersona(String PersonaID) throws SQLException {
+        String Query = "select * from persona where Persona_Id='"+PersonaID+"';";
+        Statement st = conex.getConnection().createStatement();
+        ResultSet rs = st.executeQuery(Query);
+        rs.next();
+        return new Persona(rs.getString("Persona_Id"),rs.getString("Persona_Cedula"), rs.getString("Persona_Nombre"),
+                rs.getString("Persona_Apellidos"), rs.getString("Persona_Cumple"), rs.getString("Persona_Titulo"),rs.getString("Persona_Cargo"));
+    }
                 
     
 }
